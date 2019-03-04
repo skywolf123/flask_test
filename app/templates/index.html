@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+{% from 'bootstrap/pagination.html' import render_pager, render_pagination %}
+
+{% block content %}
+    <h1>Hi, {{ current_user.username }}!</h1>
+    {% if form %}
+        {{ render_form(form) }}
+        <br>
+    {% endif %}
+
+    {% for post in posts %}
+        {% include '_post.html' %}
+    {% endfor %}
+
+    {{ render_pagination(pagination,ellipses='...',align='right') }}
+{% endblock %}
