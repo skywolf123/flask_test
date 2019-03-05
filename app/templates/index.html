@@ -3,7 +3,7 @@
 {% from 'bootstrap/pagination.html' import render_pager, render_pagination %}
 
 {% block content %}
-    <h1>Hi, {{ current_user.username }}!</h1>
+    <h1>{{ _('Hi, %(username)s!', username=current_user.username) }}</h1>
     {% if form %}
         {{ render_form(form) }}
         <br>

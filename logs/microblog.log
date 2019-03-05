@@ -5,3 +5,7 @@
 2019-02-03 16:13:22,538 INFO: Microblog startup [in /home/sirius/PycharmProjects/flask1/app/__init__.py: 40]
 2019-02-03 16:36:35,665 INFO: Microblog startup [in /home/sirius/PycharmProjects/flask1/app/__init__.py: 40]
 2019-02-03 16:40:33,430 INFO: Microblog startup [in /home/sirius/PycharmProjects/flask1/app/__init__.py: 40]
+2019-03-05 09:56:20,623 INFO: Microblog startup [in D:\PythonProjects\flask_test\app\__init__.py: 44]
+2019-03-05 10:20:00,874 INFO: Microblog startup [in D:\PythonProjects\flask_test\app\__init__.py: 48]
+2019-03-05 10:24:15,826 INFO: Microblog startup [in D:\PythonProjects\flask_test\app\__init__.py: 48]
+2019-03-05 15:00:56,863 INFO: Microblog startup [in D:\PythonProjects\flask_test\app\__init__.py: 51]

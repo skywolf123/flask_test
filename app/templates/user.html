@@ -5,22 +5,32 @@
 {% block content %}
     <table class="table table-hover">
         <tr>
-            <td width="256px"><img src="{{ user.avatar(256) }}"></td>
+            <td width="256px">
+                <img src="{{ user.avatar(256) }}">
+            </td>
             <td>
-                <h1>User: {{ user.username }}</h1>
+                <h1>{{ _('User: ') }}{{ user.username }}</h1>
                 {% if user.about_me %}
                     <p>{{ user.about_me }}</p>
                 {% endif %}
                 {% if user.last_seen %}
-                    <p>Last seen on: {{ user.last_seen }}</p>
+                    <p>{{ _('Last seen on: ') }}{{ moment(user.last_seen).format('lll') }}</p>
                 {% endif %}
-                <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
+                <p>
+                    {{ user.followers.count() }}{{ _(' followers, ') }}{{ user.followed.count() }}{{ _(' following.') }}
+                </p>
                 {% if user==current_user %}
-                    <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
+                    <p>
+                        <a href="{{ url_for('edit_profile') }}">{{ _('Edit your profile') }}</a>
+                    </p>
                 {% elif not current_user.is_following(user) %}
-                    <p><a href="{{ url_for('follow', username=user.username) }}">Follow</a></p>
+                    <p>
+                        <a href="{{ url_for('follow', username=user.username) }}">{{ _('Follow') }}</a>
+                    </p>
                 {% else %}
-                    <p><a href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a></p>
+                    <p>
+                        <a href="{{ url_for('unfollow', username=user.username) }}">{{ _('Unfollow') }}</a>
+                    </p>
                 {% endif %}
             </td>
         </tr>
