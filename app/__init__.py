@@ -35,7 +35,7 @@ def create_app(config_class=Config):
     bootstrap.init_app(app)
     moment.init_app(app)
     babel.init_app(app)
-    # global ts
+    global ts
     ts = translator(app, service_urls=['translate.google.cn'])
 
     from app.errors import bp as errors_bp
