@@ -17,3 +17,5 @@ class Config:
     ADMINS = ['your-email@example.com']
     POSTS_PER_PAGE = 2
     LANGUAGES = ['en', 'zh']
+    ELASTICSEARCH_HOST = os.environ.get('ELASTICSEARCH_HOST')
+

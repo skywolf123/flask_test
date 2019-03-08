@@ -6,7 +6,7 @@ from flask_babel import _, get_locale
 from langdetect import detect
 from app import db, ts
 from app.main import bp
-from app.main.forms import EditProfileForm, PostForm
+from app.main.forms import EditProfileForm, PostForm, SearchForm
 from app.models import User, Post
 
 
@@ -15,6 +15,7 @@ def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
+        g.search_form = SearchForm()
     g.locale = str(get_locale())
     if g.locale == 'zh':
         g.locale = 'zh-cn'
@@ -138,3 +139,20 @@ def translate_text():
     src = request.form['source_language'].lower()
     dest = [request.form['dest_language'].lower()]
     return jsonify({'text': ts.translate(text, src, dest)})
+
+
+@bp.route('/search')
+@login_required
+def search():
+    if not g.search_form.validate():
+        return redirect(url_for('main.explore'))
+    page = request.args.get('page', 1, type=int)
+    posts = Post.search(g.search_form.q.data).paginate(page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('main.search', q=g.search_form.q.data, page=posts.next_num) if posts.has_next else None
+    prev_url = url_for('main.search', q=g.search_form.q.data, page=posts.prev_num) if posts.has_prev else None
+    return render_template('search.html',
+                           title=_('Search'),
+                           posts=posts.items,
+                           pagination=posts,
+                           next_url=next_url,
+                           prev_url=prev_url)

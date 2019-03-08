@@ -35,6 +35,13 @@
                 {{ render_nav_item('main.index',_('Home'),use_li=True) }}
                 {{ render_nav_item('main.explore',_('Explore'),use_li=True) }}
             </ul>
+            {% if g.search_form %}
+                <form method="get" action="{{ url_for('main.search') }}">
+                    <div class="form-group">
+                        {{ g.search_form.q(size=20, class='form-control', placeholder=g.search_form.q.label.text) }}
+                    </div>
+                </form>
+            {% endif %}
             <ul class="navbar-nav">
                 {% if current_user.is_anonymous %}
                     {{ render_nav_item('auth.login',_('Login'),use_li=True) }}
@@ -43,6 +50,7 @@
                     {{ render_nav_item('auth.logout',_('Logout'),use_li=True) }}
                 {% endif %}
             </ul>
+
         </div>
     </nav>
 
@@ -77,9 +85,9 @@
                 text: $(sourceElem).text(),
                 source_language: sourceLang,
                 dest_language: destLang
-            }).done(function(response) {
+            }).done(function (response) {
                 $(destElem).text(response['text'])
-            }).fail(function() {
+            }).fail(function () {
                 $(destElem).text("{{ _('Error: Could not contact server.') }}");
             });
         }

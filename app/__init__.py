@@ -11,6 +11,7 @@ from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_babel import Babel, lazy_gettext as _l
 from flask_googletrans import translator
+from elasticsearch import Elasticsearch
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -37,6 +38,7 @@ def create_app(config_class=Config):
     babel.init_app(app)
     global ts
     ts = translator(app, service_urls=['translate.google.cn'])
+    app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_HOST']]) if app.config['ELASTICSEARCH_HOST'] else None
 
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
