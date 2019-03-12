@@ -40,5 +40,7 @@
         {% include '_post.html' %}
     {% endfor %}
 
-    {{ render_pagination(pagination,ellipses='...',align='right') }}
+    {% if pagination.total > pagination.per_page %}
+        {{ render_pagination(pagination,ellipses='...',align='right') }}
+    {% endif %}
 {% endblock %}
