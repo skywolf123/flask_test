@@ -43,20 +43,12 @@
                 {% if current_user.is_anonymous %}
                     {{ render_nav_item('auth.login',_('Login'),use_li=True) }}
                 {% else %}
-                    <li>
-                        <a href="{{ url_for('main.messages') }}">{{ _('Messages') }}
-                            {% set new_messages = current_user.new_messages() %}
-                            <span id="message_count" class="badge"
-                                  style="visibility:
-                                          {% if new_messages %}
-                                              visible
-                                          {% else %}
-                                              hidden
-                                          {% endif %};">
-                                {{ new_messages }}
-                            </span>
-                        </a>
-                    </li>
+                    {% if current_user.new_messages() %}
+                        {% set new_messages = _('Messages') ~ " " ~ current_user.new_messages() %}
+                    {% else %}
+                        {% set new_messages = _('Messages') %}
+                    {% endif %}
+                    {{ render_nav_item('main.messages',new_messages,user_li=True) }}
                     {{ render_nav_item('main.user',_('Profile'),use_li=True,username=current_user.username) }}
                     {{ render_nav_item('auth.logout',_('Logout'),use_li=True) }}
                 {% endif %}

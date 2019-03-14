@@ -197,6 +197,7 @@ def messages():
     prev_url = url_for('main.messages', page=messages.prev_num) if messages.has_prev else None
     return render_template('messages.html',
                            messages=messages.items,
+                           pagination=messages,
                            next_url=next_url,
                            prev_url=prev_url)
 
