@@ -7,7 +7,7 @@ from langdetect import detect
 from app import db, ts
 from app.main import bp
 from app.main.forms import EditProfileForm, PostForm, SearchForm, MessageForm
-from app.models import User, Post, Message
+from app.models import User, Post, Message, Notification
 
 
 @bp.before_request
@@ -199,3 +199,16 @@ def messages():
                            messages=messages.items,
                            next_url=next_url,
                            prev_url=prev_url)
+
+
+@bp.route('/notifications')
+@login_required
+def notifications():
+    since = request.args.get('since', 0.0, type=float)
+    notifications = current_user.notifications.filter(Notification.timestamp > since).order_by(
+        Notification.timestamp.asc())
+    return jsonify([{
+        'name': n.name,
+        'data': n.get_data(),
+        'timestamp': n.timestamp
+    } for n in notifications])

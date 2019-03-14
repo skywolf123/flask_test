@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2019-03-13 10:03+0800\n"
-"PO-Revision-Date: 2019-03-05 14:43+0800\n"
+"PO-Revision-Date: 2019-03-14 14:40+0800\n"
 "Last-Translator: \n"
 "Language: zh\n"
 "Language-Team: zh <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.6.0\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: app/__init__.py:21
 msgid "Please log in to access this page."
@@ -105,7 +106,7 @@ msgstr "搜索"
 
 #: app/main/forms.py:42 app/templates/messages.html:4
 msgid "Message"
-msgstr ""
+msgstr "私信"
 
 #: app/main/routes.py:39
 msgid "Your post is now live!"
@@ -152,11 +153,11 @@ msgstr "你没有关注 %(username)s ！"
 
 #: app/main/routes.py:178
 msgid "Your message has been sent."
-msgstr ""
+msgstr "你的私信已经发送。"
 
 #: app/main/routes.py:181
 msgid "Send Message"
-msgstr ""
+msgstr "发送私信"
 
 #: app/templates/_post.html:16
 #, python-format
@@ -181,7 +182,7 @@ msgstr "登录"
 
 #: app/templates/base.html:47
 msgid "Messages"
-msgstr ""
+msgstr "私信"
 
 #: app/templates/base.html:57
 msgid "Profile"
@@ -202,11 +203,11 @@ msgstr "你好， %(username)s ！"
 
 #: app/templates/messages.html:12
 msgid "Newer messages"
-msgstr ""
+msgstr "新私信"
 
 #: app/templates/messages.html:17
 msgid "Older messages"
-msgstr ""
+msgstr "旧私信"
 
 #: app/templates/search.html:5
 msgid "Search Results"
@@ -215,7 +216,7 @@ msgstr "搜索结果"
 #: app/templates/send_message.html:5
 #, python-format
 msgid "Send Message to %(recipient)s"
-msgstr ""
+msgstr "发送私信给 %(recipient)s"
 
 #: app/templates/user.html:12
 msgid "User: "
@@ -247,7 +248,7 @@ msgstr "取消关注"
 
 #: app/templates/user.html:37
 msgid "Send private message"
-msgstr ""
+msgstr "发送私信"
 
 #: app/templates/user_popup.html:23
 #, python-format
@@ -290,4 +291,3 @@ msgstr "发生意外的错误"
 #: app/templates/errors/500.html:5
 msgid "The administrator has been notified. Sorry for the inconvenience!"
 msgstr "管理员已收到通知。 抱歉给你带来不便！"
-
