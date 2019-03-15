@@ -31,7 +31,7 @@ def create_app(config_class=Config):
     app.config.from_object(Config)
 
     db.init_app(app)
-    migrate.init_app(app, db)
+    migrate.init_app(app, db, render_as_batch=True)     # render_as_batch可以配置为批处理模式，普通模式不支持表名、列名的修改
     login.init_app(app)
     mail.init_app(app)
     bootstrap.init_app(app)
