@@ -6,7 +6,7 @@ from flask_babel import _, get_locale
 from langdetect import detect
 from app import db, ts
 from app.main import bp
-from app.main.forms import EditProfileForm, PostForm, SearchForm, MessageForm
+from app.main.forms import EditProfileForm, PostForm, SearchForm, MessageForm, CommentForm
 from app.models import User, Post, Message, Notification
 
 
@@ -40,30 +40,37 @@ def index():
         return redirect(url_for('main.index'))
     page = request.args.get('page', 1, type=int)
     posts = current_user.followed_posts().paginate(page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('main.index', page=posts.next_num) if posts.has_next else None
-    prev_url = url_for('main.index', page=posts.prev_num) if posts.has_prev else None
     return render_template('index.html',
                            title=_('Home Page'),
                            form=form,
                            pagination=posts,
-                           posts=posts.items,
-                           next_url=next_url,
-                           prev_url=prev_url)
+                           posts=posts.items)
 
+@bp.route('/add_comment/<main_post_id>', methods=['GET', 'POST'])
+@login_required
+def add_comment(main_post_id):
+    main_post = Post.query.filter_by(id=main_post_id).first_or_404()
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Post(author=current_user, main_post=main_post, body=form.comment.data)
+        db.session.add(comment)
+        db.session.commit()
+        flash(_('Your comment is now live!'))
+        return redirect(url_for('main.index'))
+    return render_template('add_comment.html',
+                           title=_('Add Comment'),
+                           form=form,
+                           post=main_post)
 
 @bp.route('/explore')
 @login_required
 def explore():
     page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(Post.timestamp.desc()).paginate(page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('main.explore', page=posts.next_num) if posts.has_next else None
-    prev_url = url_for('main.explore', page=posts.prev_num) if posts.has_prev else None
     return render_template('index.html',
                            title=_('Explore'),
                            pagination=posts,
-                           posts=posts.items,
-                           next_url=next_url,
-                           prev_url=prev_url)
+                           posts=posts.items)
 
 
 @bp.route('/user/<username>')

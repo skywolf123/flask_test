@@ -2,7 +2,7 @@
     <tr>
         <td width="70px">
             <a href="{{ url_for('main.user',username=post.author.username) }}">
-                <img src="{{ post.author.avatar(70) }}">
+                <img src="{{ post.author.avatar(70) }}" alt="{{ _('Avatar') }}">
             </a>
         </td>
         <td>
@@ -27,6 +27,41 @@
                 </span>
             {% endif %}
             <br>
+            <a href="{{ url_for('main.add_comment', main_post_id=post.id) }}">
+                {{ _('Add comment') }}
+            </a>
         </td>
     </tr>
+    {% for comment in post.comments %}
+    <tr>
+        <td width="140px">
+            <a href="{{ url_for('main.user',username=comment.author.username) }}">
+                <img align="right" src="{{ comment.author.avatar(70) }}" alt="{{ _('Avatar') }}">
+            </a>
+        </td>
+        <td>
+            {% set user_link %}
+            <span class="user-popup">
+                <a href="{{ url_for('main.user', username=comment.author.username) }}">
+                    {{ comment.author.username }}
+                </a>
+            </span>
+            {% endset %}
+            {{ _('%(username)s said %(when)s:', username=user_link, when=moment(comment.timestamp).fromNow()) }}
+            <br>
+            <span id="post{{ comment.id }}">{{ comment.body }}</span>
+            {% if comment.language and comment.language !=g.locale %}
+                <br><br>
+                <span id="translation{{ post.id }}">
+                    <a href="javascript:translate(
+                    '#post{{ comment.id }}',
+                    '#translation{{ comment.id }}',
+                    '{{ comment.language }}',
+                    '{{ g.locale }}');">{{ _('Translate') }}</a>
+                </span>
+            {% endif %}
+            <br>
+        </td>
+    </tr>
+    {% endfor %}
 </table>

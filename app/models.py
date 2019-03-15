@@ -164,8 +164,14 @@ class Post(SearchableMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='user_id_fk'))
+    main_post_id = db.Column(db.Integer, db.ForeignKey('post.id', name='main_post_id_fk'))
     language = db.Column(db.String(5))
+    comments = db.relationship(
+        'Post',
+        backref=db.backref('main_post', remote_side=[id]),
+        lazy='dynamic'
+    )
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
@@ -173,8 +179,8 @@ class Post(SearchableMixin, db.Model):
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id', name='sender_id_fk'))
+    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id', name='recipient_id_fk'))
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
@@ -185,7 +191,7 @@ class Message(db.Model):
 class Notification(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), index=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='user_id_fk'))
     timestamp = db.Column(db.Float, index=True, default=time)
     payload_json = db.Column(db.Text)
 

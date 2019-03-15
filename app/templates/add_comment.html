@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block content %}
+	<h1>{{ _('Add Comment') }}</h1>
+    {% include '_post.html' %}
+	<div class="row">
+		<div class="col-md-4">
+			{{ render_form(form) }}
+		</div>
+	</div>
+{% endblock %}

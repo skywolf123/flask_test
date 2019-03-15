@@ -10,7 +10,9 @@
     {% endif %}
 
     {% for post in posts %}
-        {% include '_post.html' %}
+        {% if post.main_post_id==None %}
+            {% include '_post.html' %}
+        {% endif %}
     {% endfor %}
 
     {% if pagination.total > pagination.per_page %}
